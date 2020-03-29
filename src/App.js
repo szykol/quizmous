@@ -1,14 +1,30 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { render } from '@testing-library/react';
 
-function App() {
+class App extends React.Component {
+  state = {"name": 'e', "version": 'xd'};
+  
+  get_data = () => {
+    fetch('http://localhost:8000/').then(resp => {
+    resp.json().then(resp => {
+      console.log(resp);
+      this.setState({"version": resp["version"], "name": resp["name"]});
+    })
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
+  render = () => {
+    this.get_data();
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          API: {this.state.name} Version: {this.state.version}
         </p>
         <a
           className="App-link"
@@ -21,6 +37,7 @@ function App() {
       </header>
     </div>
   );
+  }
 }
 
 export default App;
