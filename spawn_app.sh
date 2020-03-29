@@ -1,3 +1,14 @@
+submodules=(`grep "path =" .gitmodules | awk '{ print $3 }'`)
+
+for submdl in ${submodules[@]}; do
+    if [ ! "$(ls -A $submdl)" ]; then
+        echo "one or more modules does not exist"
+        echo "initializing submodules"
+        git submodule update --init --recursive
+        break
+    fi
+done
+
 source api/spawn_api.sh --detach --deamon
 
 CONTAINER="quizmous"
