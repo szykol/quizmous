@@ -1,9 +1,13 @@
+docker stop ${CONTAINER} 2>/dev/null
+docker rm ${CONTAINER} 2>/dev/null
+docker network create ${NETWORK}
+
+source api/spawn_api.sh --detach --deamon
 CONTAINER="quizmous"
 INTERACTIVE="-it"
 ENTRYPOINT="--entrypoint bash"
-
-docker stop ${CONTAINER} 2>/dev/null
-docker rm ${CONTAINER} 2>/dev/null
+NETWORK='react-api'
+docker network connect ${NETWORK} quizmous_api
 
 while test $# -gt 0
 do
@@ -23,7 +27,7 @@ do
         --test)
             echo "Using ${CONTAINER} for tests only"
             ENTRYPOINT=""
-            docker run ${INTERACTIVE} --name ${CONTAINER} -v ${PWD}:/usr/local/app -v /usr/local/app/node_modules -p 3000:3000 ${ENTRYPOINT} --rm quizmous:dev npm test
+            docker run ${INTERACTIVE} --network ${NETWORK} --name ${CONTAINER} -v ${PWD}:/usr/local/app -v /usr/local/app/node_modules -p 3000:3000 ${ENTRYPOINT} --rm quizmous:dev npm test
             RETVAL=$?
             exit ${RETVAL}
             ;;
@@ -35,4 +39,4 @@ do
     shift
 done
 
-docker run ${INTERACTIVE} --name ${CONTAINER} -v ${PWD}:/usr/local/app -v /usr/local/app/node_modules -p 3000:3000 ${ENTRYPOINT} --rm quizmous:dev
+docker run ${INTERACTIVE} --network ${NETWORK} --name ${CONTAINER} -v ${PWD}:/usr/local/app -v /usr/local/app/node_modules -p 3000:3000 ${ENTRYPOINT} --rm quizmous:dev
