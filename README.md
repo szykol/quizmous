@@ -26,3 +26,6 @@ Launching the app using Unix systems is as easy as calling one command:
 ```
 
 Which spawns API, Postgres, React app in their own containers.
+
+## Launch the app in browser
+Open up the browser and type localhost:3000
