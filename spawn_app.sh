@@ -1,12 +1,13 @@
-docker stop ${CONTAINER} 2>/dev/null
-docker rm ${CONTAINER} 2>/dev/null
-docker network create ${NETWORK}
-
 source api/spawn_api.sh --detach --deamon
+
 CONTAINER="quizmous"
 INTERACTIVE="-it"
 ENTRYPOINT="--entrypoint bash"
 NETWORK='react-api'
+
+docker stop ${CONTAINER} 2>/dev/null
+docker rm ${CONTAINER} 2>/dev/null
+docker network create ${NETWORK}
 docker network connect ${NETWORK} quizmous_api
 
 while test $# -gt 0
