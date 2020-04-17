@@ -20,10 +20,12 @@ class App extends React.Component {
       <header className="jumbotron">
         <TitleBar />
       </header>
-      <div className="container col-md-6">
-          <ApiVersion />
-          <Login/>
+      <div className="container col-md-6 clear-top">
+        <Login/>
       </div>
+      <footer className="footer">
+        <span className="text-muted"><ApiVersion/></span>
+    </footer>
     </div>
   );
   }

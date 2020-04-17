@@ -20,6 +20,6 @@ export default function ApiVersion() {
     }, []);
 
     return (
-        <h1> API: {version.name} {version.version}-{version.build} </h1>
+        <span> API: {version.name} {version.version}-{version.build} </span>
     )
 }
