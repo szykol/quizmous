@@ -17,6 +17,7 @@
     "test": "CI=true react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://quizmous_api:8000",
   "eslintConfig": {
     "extends": "react-app"
   },
