@@ -1,35 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-class ApiVersion extends React.Component {
-    state = {
+export default function ApiVersion() {
+    const [version, setVersion] = useState({
         name: "api_name",
         version: "0.0.x",
         build: "x",
-        fetched: false
-    }
-    
-    fetch_api_version = async () => {
-        try {
-            let payload = await fetch('http://localhost:3000/version').then(resp => resp.json());
-            this.setState({
-                name: payload["name"],
-                version: payload["version"],
-                build: payload["build"],
-                fetched: true
-            });
-        } catch (err) {
-            console.log("Fetching info from API has failed", err);
-        }
-        
-    }
+    });
 
-    render() {
-        if (!this.state.fetched)
-            this.fetch_api_version();
-        return (
-            <h1> API: {this.state.name} {this.state.version}-{this.state.build} </h1>
+    useEffect(() => {
+        fetch('http://localhost:3000/version').then(resp => resp.json()).then(
+            json => {
+                setVersion({
+                    name: json.name,
+                    version: json.version,
+                    build: json.build
+                })
+            }
         )
-    }
-}
+    }, []);
 
-export default ApiVersion;
+    return (
+        <h1> API: {version.name} {version.version}-{version.build} </h1>
+    )
+}
