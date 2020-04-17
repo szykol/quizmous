@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  postgres:
+    container_name: postgres_api
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - 'POSTGRES_USER=api'
+      - 'POSTGRES_PASSWORD=foobar'
+      - 'POSTGRES_DB=quiz'
+    volumes:
+      - ./api/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+  api:
+    build: api/
+    container_name: quizmous_api
+    hostname: quizmous_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api/:/usr/local/api
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    environment:
+      - 'PGHOST=postgres_api'
+      - 'PGDATABASE=quiz'
+      - 'PGUSER=api'
+      - 'PGPASSWORD=foobar'
+  react:
+    build: .
+    container_name: react
+    hostname: react
+    ports:
+      - "3000:3000"
+    volumes:
+      - '.:/usr/local/app'
+      - '/usr/local/app/node_modules'
+    depends_on:
+      - api
+    links:
+      - api
+    stdin_open: true

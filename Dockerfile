@@ -9,6 +9,7 @@ ENV PATH /usr/local/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json /usr/local/app/package.json
+
 RUN npm install --silent
 RUN npm install react-scripts -g --silent
 
