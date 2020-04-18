@@ -28,6 +28,9 @@ services:
       - 'PGDATABASE=quiz'
       - 'PGUSER=api'
       - 'PGPASSWORD=foobar'
+    tty: true
+    stdin_open: true
+    entrypoint: /bin/bash
   react:
     build: .
     container_name: react
