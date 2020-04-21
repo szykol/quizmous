@@ -20,8 +20,8 @@ export default function Quiz() {
 
     return (
         <div className="container-sm">
-            <h4>Name: {quiz.name}</h4>
-            <h5>Description: {quiz.description}</h5>
+            <h2>{quiz.name}</h2>
+            <h3>{quiz.description}</h3>
 
             {quiz.questions.map((question, idx) => <Question data={question} key={idx}></Question>)}
 
