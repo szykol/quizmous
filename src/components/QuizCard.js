@@ -30,24 +30,30 @@ export default function QuizCard({ title, description, children }) {
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          { title }
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          { description }
-        </Typography>
-        <Grid
+    <Grid
                 container
                 spacing={5}
                 direction="column"
                 alignItems="center"
                 justify="center"
         >
-            {children}
+        <Grid container alignItems="center" style={{maxWidth: 300}}
+            justify="center" alignContent="center" item xs={12}
+        >
+            <Typography variant="h3" component="h2">
+                { title }
+            </Typography>
         </Grid>
-      </CardContent>
-    </Card>
+        <Grid container alignItems="center" style={{maxWidth: 300}}
+            justify="center" alignContent="center" item xs={12}
+        >
+            <Typography className={classes.pos} color="textSecondary">
+                { description }
+            </Typography>
+        </Grid>
+
+        {children}
+        
+    </Grid>
   );
 }

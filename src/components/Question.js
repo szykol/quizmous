@@ -55,7 +55,7 @@ const createWrapperComponent = (type, question, answers) => {
 export default function Question({ question, type, answers }) {
     return (
           <Grid container alignItems="center" style={{maxWidth: 300}}
-            justify="center" alignContent="center" item xs={6}
+            justify="center" alignContent="center" item xs={12}
           >
             <QuestionCard question={question}>
               <FormControl fullWidth component="fieldset">

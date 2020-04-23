@@ -22,18 +22,24 @@ export default function Quiz() {
     }, []);
 
     return (
+    <div style={{ padding: 20 }}>
+
         <Grid
                 container
+                spacing={5}
+                direction="column"
+                alignItems="center"
                 justify="center"
-        >
+                >
             <QuizCard title={quiz.name} description={quiz.description}>
                 {quiz.questions.map((question, idx) => 
                     <Question question={question.question} key={idx} answers={question.answers} type={question.type}></Question>
-                )}
+                    )}
                 <Button variant="contained" color="primary">
                     Finish
                 </Button>
             </QuizCard>
         </Grid>
+    </div>
     )
 }

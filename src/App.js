@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import TitleBar from './components/TitleBar'
 import ApiVersion from './components/ApiVersion'
@@ -7,29 +7,41 @@ import Login from './components/Login';
 import Quiz from './components/Quiz';
 import SignIn from './components/Signin';
 import AppBar from './components/AppBar';
-class App extends React.Component {
-  state = {
-    logged: false
-  }
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-  render = () => {
-  const { logged } = this.state;
-  return (
-    <div className="App">
-      <AppBar></AppBar>
-      { !logged &&
-        <SignIn onLogin={() => {
-        this.setState({logged: true})
-        }}></SignIn> }
-      {logged &&
-        <Quiz></Quiz>
-      }
-      <footer className="footer">
-        <span className="text-muted"><ApiVersion/></span>
-    </footer>
-    </div>
+const prefersDarkMode = true;
+
+function App() {
+  const [logged, setLogged] = useState(false);
+
+  const theme = React.useMemo(
+    () =>
+      createMuiTheme({
+        palette: {
+          type: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
   );
-  }
+  
+  return (
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <AppBar></AppBar>
+        { !logged &&
+          <SignIn onLogin={() => {
+            setLogged(true)
+          }}></SignIn> }
+        {logged &&
+          <Quiz></Quiz>
+        }
+        <footer className="footer">
+          <span className="text-muted"><ApiVersion/></span>
+      </footer>
+      </div>
+    </ThemeProvider>
+  );
 }
 
 export default App;
+
