@@ -4,8 +4,6 @@ import Question from './Question';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-
-
 export default function Quiz() {
     const [quiz, setQuiz] = useState({
         name: "Quiz Name",
@@ -30,14 +28,11 @@ export default function Quiz() {
                 container
                 spacing={5}
                 direction="column"
-                alignItems="flex-start"
+                alignItems="center"
                 justify="center"
-                >
+            >
                 {quiz.questions.map((question, idx) => 
-                <Grid container alignItems="flex-start" style={{minWidth: 500}}
-                justify="center" key={idx} alignContent="flex-start" item xs={12}>
-                    <Question data={question} ></Question>
-                </Grid>
+                        <Question question={question.question} key={idx} answers={question.answers} type={question.type}></Question>
                 )}
             </Grid>
 
