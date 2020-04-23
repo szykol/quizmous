@@ -20,7 +20,7 @@ export default function DenseAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="sticky">
+      <AppBar position="sticky" color="default">
         <Toolbar variant="dense">
           <Typography variant="h6" color="inherit">
             Quizmous - Anonymous Quiz App
