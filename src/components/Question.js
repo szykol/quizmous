@@ -9,6 +9,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import QuestionCard from './QuestionCard';
   
 const createWrapperComponent = (type, question, answers) => {
     if (type == "RADIO") {
@@ -56,10 +57,12 @@ export default function Question({ question, type, answers }) {
           <Grid container alignItems="center" style={{maxWidth: 300}}
             justify="center" alignContent="center" item xs={6}
           >
-            <FormControl fullWidth component="fieldset">
-                <FormLabel component="legend">{question}</FormLabel>
-                {createWrapperComponent(type, question, answers)}
-            </FormControl>
+            <QuestionCard question={question}>
+              <FormControl fullWidth component="fieldset">
+                  {/* <FormLabel component="legend">{question}</FormLabel> */}
+                  {createWrapperComponent(type, question, answers)}
+              </FormControl>
+            </QuestionCard>
         </Grid>
     )
 }
