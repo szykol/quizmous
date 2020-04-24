@@ -49,30 +49,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn({ onLogin }) {
   const classes = useStyles();
-  const [nickForm, setNickForm] = useState();
+  const [nick, setNick] = useState();
   const [pass, setPass] = useState();
   const [register, setRegister] = useState(false);
-  const { setNick } = useContext(UserContext);
+  const { loginUser, registerUser } = useContext(UserContext);
 
-  const login = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:3000/user/${register ? "register" : "login"}`, {
-      method: "POST",
-      body: wrap_payload({ nick: nickForm, password: pass }),
-    })
-      .then((resp) => resp.json())
-      .then((payload) => {
-        console.log(payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    if (register) {
+    if (!register) {
+      loginUser(nick, pass);
       setRegister(false);
     } else {
-      setNick(nickForm);
-      onLogin();
+      registerUser(nick, pass);
     }
   };
 
@@ -94,7 +82,7 @@ export default function SignIn({ onLogin }) {
             name="nick"
             autoComplete="nick"
             autoFocus
-            onChange={(e) => setNickForm(e.target.value)}
+            onChange={(e) => setNick(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -118,7 +106,7 @@ export default function SignIn({ onLogin }) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => login(e)}
+            onClick={(e) => submitHandler(e)}
           >
             Sign In
           </Button>

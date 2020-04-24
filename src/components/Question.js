@@ -42,7 +42,8 @@ const createWrapperComponent = (type, question, answers) => {
       <FormGroup>
         {answers.map((answer, idx) => (
           <FormControlLabel
-            control={<Checkbox key={idx} name={answer.answer} />}
+            key={idx}
+            control={<Checkbox name={answer.answer} />}
             label={answer.answer}
           />
         ))}
