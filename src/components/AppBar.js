@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from './UserContext';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,10 +14,14 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  nick: {
+    marginLeft: 'auto'
+  }
 }));
 
 export default function DenseAppBar() {
   const classes = useStyles();
+  const { nick } = useContext(UserContext);
 
   return (
     <div className={classes.root}>
@@ -25,6 +30,9 @@ export default function DenseAppBar() {
           <Typography variant="h6" color="inherit">
             Quizmous - Anonymous Quiz App
           </Typography>
+          <Typography className={classes.nick}>
+            Hello, { nick }
+          </Typography> 
         </Toolbar>
       </AppBar>
     </div>

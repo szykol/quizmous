@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useState } from 'react'
 import wrap_payload from '../utils/jwt';
+import { userContext, UserContext } from './UserContext';
+
 
 function Copyright() {
   return (
@@ -50,15 +52,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn({ onLogin }) {
   const classes = useStyles();
-  const [nick, setNick] = useState();
+  const [nickForm, setNickForm] = useState();
   const [pass, setPass] = useState();
   const [register, setRegister] = useState(false);
+  const { setNick } = useContext(UserContext);
 
   const login = (e) => {
       e.preventDefault();
       fetch(`http://localhost:3000/user/${register ? "register" : "login"}`, {
           method: 'POST',
-          body: wrap_payload({nick, password: pass})
+          body: wrap_payload({nick: nickForm, password: pass})
       }).then(resp => resp.json()).then(payload => {
           console.log(payload)
       }).catch(err => {
@@ -68,6 +71,7 @@ export default function SignIn({ onLogin }) {
       if (register) {
           setRegister(false);
       } else {
+          setNick(nickForm);
           onLogin();
       }
   }
@@ -90,7 +94,7 @@ export default function SignIn({ onLogin }) {
             name="nick"
             autoComplete="nick"
             autoFocus
-            onChange={(e) => setNick(e.target.value)}
+            onChange={(e) => setNickForm(e.target.value)}
           />
           <TextField
             variant="outlined"

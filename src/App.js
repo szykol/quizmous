@@ -8,6 +8,7 @@ import Quiz from './components/Quiz';
 import SignIn from './components/Signin';
 import AppBar from './components/AppBar';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { UserContextProvider } from './components/UserContext';
 
 const prefersDarkMode = true;
 
@@ -26,6 +27,8 @@ function App() {
   
   return (
     <ThemeProvider theme={theme}>
+      <UserContextProvider>
+
       <div className="App">
         <AppBar></AppBar>
         { !logged &&
@@ -39,6 +42,8 @@ function App() {
           <span className="text-muted"><ApiVersion/></span>
       </footer>
       </div>
+      </UserContextProvider>
+
     </ThemeProvider>
   );
 }
