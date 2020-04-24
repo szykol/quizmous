@@ -8,7 +8,7 @@ function UserContextProvider({ children }) {
     <UserContext.Provider
       value={{
         nick,
-        setNick
+        setNick,
       }}
     >
       {children}

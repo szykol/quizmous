@@ -1,7 +1,7 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
   root: {
@@ -9,9 +9,9 @@ const useStyles = makeStyles({
     maxWidth: 800,
   },
   bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
   },
   title: {
     fontSize: 14,
@@ -25,29 +25,40 @@ export default function QuizCard({ title, description, children }) {
   const classes = useStyles();
   return (
     <Grid
-                container
-                spacing={5}
-                direction="column"
-                alignItems="center"
-                justify="center"
-        >
-        <Grid container alignItems="center" style={{maxWidth: 300}}
-            justify="center" alignContent="center" item xs={12}
-        >
-            <Typography variant="h3" component="h2">
-                { title }
-            </Typography>
-        </Grid>
-        <Grid container alignItems="center" style={{maxWidth: 300}}
-            justify="center" alignContent="center" item xs={12}
-        >
-            <Typography className={classes.pos} color="textSecondary">
-                { description }
-            </Typography>
-        </Grid>
+      container
+      spacing={5}
+      direction="column"
+      alignItems="center"
+      justify="center"
+    >
+      <Grid
+        container
+        alignItems="center"
+        style={{ maxWidth: 300 }}
+        justify="center"
+        alignContent="center"
+        item
+        xs={12}
+      >
+        <Typography variant="h3" component="h2">
+          {title}
+        </Typography>
+      </Grid>
+      <Grid
+        container
+        alignItems="center"
+        style={{ maxWidth: 300 }}
+        justify="center"
+        alignContent="center"
+        item
+        xs={12}
+      >
+        <Typography className={classes.pos} color="textSecondary">
+          {description}
+        </Typography>
+      </Grid>
 
-        {children}
-        
+      {children}
     </Grid>
   );
 }

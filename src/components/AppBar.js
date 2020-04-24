@@ -1,21 +1,21 @@
-import React, { useContext } from 'react';
-import { UserContext } from './UserContext';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import React, { useContext } from "react";
+import { UserContext } from "./UserContext";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: 10
+    marginBottom: 10,
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   nick: {
-    marginLeft: 'auto'
-  }
+    marginLeft: "auto",
+  },
 }));
 
 export default function DenseAppBar() {
@@ -29,9 +29,7 @@ export default function DenseAppBar() {
           <Typography variant="h6" color="inherit">
             Quizmous - Anonymous Quiz App
           </Typography>
-          <Typography className={classes.nick}>
-            Hello, { nick }
-          </Typography> 
+          <Typography className={classes.nick}>Hello, {nick}</Typography>
         </Toolbar>
       </AppBar>
     </div>
