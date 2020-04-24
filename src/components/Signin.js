@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useState } from "react";
-import wrap_payload from "../utils/jwt";
+import Alert from "@material-ui/lab/Alert";
 import { UserContext } from "./UserContext";
 
 function Copyright() {
@@ -52,7 +52,7 @@ export default function SignIn({ onLogin }) {
   const [nick, setNick] = useState();
   const [pass, setPass] = useState();
   const [register, setRegister] = useState(false);
-  const { loginUser, registerUser } = useContext(UserContext);
+  const { loginUser, registerUser, requestError } = useContext(UserContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -96,6 +96,7 @@ export default function SignIn({ onLogin }) {
             autoComplete="current-password"
             onChange={(e) => setPass(e.target.value)}
           />
+          {requestError && <Alert severity="error">{requestError}</Alert>}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
