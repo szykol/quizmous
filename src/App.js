@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import TitleBar from './components/TitleBar'
 import ApiVersion from './components/ApiVersion'
-import wrap_payload from './utils/jwt';
-import Login from './components/Login';
 import Quiz from './components/Quiz';
 import SignIn from './components/Signin';
 import AppBar from './components/AppBar';
