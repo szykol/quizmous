@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,12 +16,13 @@ const useStyles = makeStyles((theme) => ({
   },
   nick: {
     marginLeft: "auto",
+    marginRight: 5,
   },
 }));
 
 export default function DenseAppBar() {
   const classes = useStyles();
-  const { nick } = useContext(UserContext);
+  const { nick, logged, logoutUser } = useContext(UserContext);
 
   return (
     <div className={classes.root}>
@@ -30,6 +32,11 @@ export default function DenseAppBar() {
             Quizmous - Anonymous Quiz App
           </Typography>
           <Typography className={classes.nick}>Hello, {nick}</Typography>
+          {logged && (
+            <Button onClick={logoutUser} color="primary">
+              Logout
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </div>

@@ -44,6 +44,11 @@ function UserContextProvider({ children }) {
     setRequestError(null);
   }
 
+  async function logoutUser() {
+    setLogged(false);
+    setNick("guest");
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -52,6 +57,7 @@ function UserContextProvider({ children }) {
         registerUser,
         logged,
         requestError,
+        logoutUser,
       }}
     >
       {children}
