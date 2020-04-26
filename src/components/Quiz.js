@@ -7,7 +7,7 @@ import QuizCard from "./QuizCard";
 import { QuizContext } from "./QuizContext";
 
 export default function Quiz() {
-  const { currentQuiz } = useContext(QuizContext);
+  const { currentQuiz, finishQuiz } = useContext(QuizContext);
 
   return (
     <div style={{ padding: 20 }}>
@@ -24,13 +24,13 @@ export default function Quiz() {
         >
           {currentQuiz.questions.map((question, idx) => (
             <Question
-              question={question.question}
+              question_data={question}
               key={idx}
               answers={question.answers}
               type={question.type}
             ></Question>
           ))}
-          <Button variant="contained" color="primary">
+          <Button onClick={finishQuiz} variant="contained" color="primary">
             Finish
           </Button>
         </QuizCard>
