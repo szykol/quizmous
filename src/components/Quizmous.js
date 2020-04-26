@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "./UserContext";
+import { QuizContext } from "./QuizContext";
 import ApiVersion from "./ApiVersion";
 import Quiz from "./Quiz";
 import SignIn from "./Signin";
@@ -8,12 +9,13 @@ import QuizList from "./QuizList";
 
 function Quizmous() {
   const { logged } = useContext(UserContext);
+  const { selectedQuiz } = useContext(QuizContext);
 
   return (
     <div className="App">
       <AppBar></AppBar>
       {!logged && <SignIn></SignIn>}
-      {logged && <QuizList></QuizList>}
+      {logged && ((selectedQuiz && <Quiz />) || <QuizList />)}
       <footer className="footer">
         <span className="text-muted">
           <ApiVersion />

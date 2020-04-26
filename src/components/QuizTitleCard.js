@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
+import { QuizContext } from "./QuizContext";
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
 
 export default function QuizTitleCard({ title, description, author }) {
   const classes = useStyles();
-
+  const { setSelectedQuiz } = useContext(QuizContext);
   return (
     <Grid
       container
@@ -41,7 +42,11 @@ export default function QuizTitleCard({ title, description, author }) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button
+            size="small"
+            onClick={(e) => setSelectedQuiz(title)}
+            color="primary"
+          >
             Take the Quiz!
           </Button>
         </CardActions>

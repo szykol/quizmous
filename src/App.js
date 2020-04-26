@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
 import { UserContextProvider } from "./components/UserContext";
+import { QuizContextProvider } from "./components/QuizContext";
+
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Quizmous from "./components/Quizmous";
 
@@ -20,7 +22,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <UserContextProvider>
-        <Quizmous />
+        <QuizContextProvider>
+          <Quizmous />
+        </QuizContextProvider>
       </UserContextProvider>
     </ThemeProvider>
   );
