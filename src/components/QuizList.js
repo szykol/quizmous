@@ -1,20 +1,10 @@
-import React, { useEffect, useState } from "react";
-import apiRequest from "../utils/request";
+import React, { useContext } from "react";
 import QuizTitleCard from "./QuizTitleCard";
 import Grid from "@material-ui/core/Grid";
-function QuizList() {
-  const [quizes, setQuizes] = useState([]);
+import { QuizContext } from "./QuizContext";
 
-  useEffect(() => {
-    apiRequest("quiz", "GET")
-      .then((quizes) => {
-        console.log(quizes);
-        setQuizes(quizes);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+function QuizList() {
+  const { quizes } = useContext(QuizContext);
 
   return (
     <Grid

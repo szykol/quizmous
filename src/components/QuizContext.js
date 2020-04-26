@@ -1,16 +1,28 @@
-import React, { useState, createContext } from "react";
-import wrap_payload from "../utils/jwt";
-
+import React, { useState, createContext, useEffect } from "react";
+import apiRequest from "../utils/request";
 const QuizContext = createContext();
 
 function QuizContextProvider({ children }) {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [quizes, setQuizes] = useState([]);
+
+  useEffect(() => {
+    apiRequest("quiz", "GET")
+      .then((quizes) => {
+        console.log(quizes);
+        setQuizes(quizes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <QuizContext.Provider
       value={{
         selectedQuiz,
         setSelectedQuiz,
+        quizes,
       }}
     >
       {children}
