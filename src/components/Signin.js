@@ -52,7 +52,7 @@ export default function SignIn({ onLogin }) {
   const [nick, setNick] = useState();
   const [pass, setPass] = useState();
   const [register, setRegister] = useState(false);
-  const { loginUser, registerUser, requestError } = useContext(UserContext);
+  const { loginUser, registerUser, requestResponse } = useContext(UserContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -96,7 +96,9 @@ export default function SignIn({ onLogin }) {
             autoComplete="current-password"
             onChange={(e) => setPass(e.target.value)}
           />
-          {requestError && <Alert severity="error">{requestError}</Alert>}
+          {requestResponse && (
+            <Alert severity="error">{requestResponse.message}</Alert>
+          )}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
