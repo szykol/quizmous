@@ -3,8 +3,8 @@ import apiRequest from "../utils/request";
 const QuizContext = createContext();
 
 function QuizContextProvider({ children }) {
-  const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [quizes, setQuizes] = useState([]);
+  const [currentQuiz, setCurrentQuiz] = useState(null);
 
   useEffect(() => {
     apiRequest("quiz", "GET")
@@ -17,12 +17,19 @@ function QuizContextProvider({ children }) {
       });
   }, []);
 
+  function selectCurrentQuiz(id) {
+    const quiz = quizes.find((quiz) => quiz.quiz_id === id);
+    console.log(quiz);
+
+    setCurrentQuiz(quiz);
+  }
+
   return (
     <QuizContext.Provider
       value={{
-        selectedQuiz,
-        setSelectedQuiz,
         quizes,
+        selectCurrentQuiz,
+        currentQuiz,
       }}
     >
       {children}

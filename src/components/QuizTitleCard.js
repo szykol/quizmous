@@ -19,9 +19,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function QuizTitleCard({ title, description, author }) {
+export default function QuizTitleCard({ title, description, author, id }) {
   const classes = useStyles();
-  const { setSelectedQuiz } = useContext(QuizContext);
+  const { selectCurrentQuiz } = useContext(QuizContext);
   return (
     <Grid
       container
@@ -44,7 +44,7 @@ export default function QuizTitleCard({ title, description, author }) {
         <CardActions>
           <Button
             size="small"
-            onClick={(e) => setSelectedQuiz(title)}
+            onClick={(e) => selectCurrentQuiz(id)}
             color="primary"
           >
             Take the Quiz!

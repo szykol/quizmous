@@ -9,13 +9,13 @@ import QuizList from "./QuizList";
 
 function Quizmous() {
   const { logged } = useContext(UserContext);
-  const { selectedQuiz } = useContext(QuizContext);
+  const { currentQuiz } = useContext(QuizContext);
 
   return (
     <div className="App">
       <AppBar></AppBar>
       {!logged && <SignIn></SignIn>}
-      {logged && ((selectedQuiz && <Quiz />) || <QuizList />)}
+      {logged && ((currentQuiz && <Quiz />) || <QuizList />)}
       <footer className="footer">
         <span className="text-muted">
           <ApiVersion />

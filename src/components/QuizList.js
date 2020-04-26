@@ -20,6 +20,7 @@ function QuizList() {
           author={item.author.nick}
           description={item.description}
           key={idx}
+          id={item.quiz_id}
         />
       ))}
     </Grid>
