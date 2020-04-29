@@ -25,7 +25,13 @@ function QuizContextProvider({ children }) {
   }
 
   function finishQuiz() {
-    console.log(userAnswers);
+    apiRequest(`quiz/${currentQuiz.quiz_id}/answers`, "POST", userAnswers)
+      .then((payload) => {
+        console.log(payload);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function updateQuizAnswer(question_id, answer_data, type) {
