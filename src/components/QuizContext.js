@@ -52,6 +52,7 @@ function QuizContextProvider({ children }) {
         console.log(err);
       });
 
+    setTakenQuizes([...takenQuizes, currentQuiz.quiz_id]);
     setCurrentQuiz(null);
   }
 
