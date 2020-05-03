@@ -49,6 +49,9 @@ export default function QuizTitleCard({ title, description, author, id }) {
           >
             Take the Quiz!
           </Button>
+          <Typography variant="body2" color="secondary" component="p">
+            This quiz has been taken
+          </Typography>
         </CardActions>
       </Card>
     </Grid>

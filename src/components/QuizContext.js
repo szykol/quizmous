@@ -1,4 +1,5 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
+import { UserContext } from "./UserContext";
 import apiRequest from "../utils/request";
 const QuizContext = createContext();
 
@@ -6,17 +7,31 @@ function QuizContextProvider({ children }) {
   const [quizes, setQuizes] = useState([]);
   const [currentQuiz, setCurrentQuiz] = useState(null);
   const [userAnswers, setUserAnswers] = useState({});
+  const [takenQuizes, setTakenQuizes] = useState([]);
+
+  const { nick, pass } = useContext(UserContext);
 
   useEffect(() => {
     apiRequest("quiz", "GET")
       .then((quizes) => {
         console.log(quizes);
         setQuizes(quizes);
+
+        for (let q of quizes) {
+          apiRequest(`user/${nick}/quiz_taken/${q.quiz_id}`, "GET").then(
+            (resp) => {
+              if (resp.taken) {
+                console.log([...takenQuizes, q.quiz_id]);
+                setTakenQuizes([...takenQuizes, q.quiz_id]);
+              }
+            }
+          );
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [nick]);
 
   function selectCurrentQuiz(id) {
     const quiz = quizes.find((quiz) => quiz.quiz_id === id);
@@ -28,6 +43,10 @@ function QuizContextProvider({ children }) {
     apiRequest(`quiz/${currentQuiz.quiz_id}/answers`, "POST", userAnswers)
       .then((payload) => {
         console.log(payload);
+        apiRequest(`user/quiz_taken/${currentQuiz.quiz_id}`, "POST", {
+          nick,
+          password: pass,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -51,18 +70,21 @@ function QuizContextProvider({ children }) {
       if (currentAnswer) {
         let new_array = null;
         if (checked) {
-          new_array = [...currentAnswer.id, answer_id];
+          new_array = [...currentAnswer.answer_id, answer_id];
         } else {
           new_array = currentAnswer.id.filter((val) => val !== answer_id);
         }
-        newData = createNewData({ id: new_array, value: null });
+        newData = createNewData({ answer_id: new_array, value: null });
       } else {
-        newData = createNewData({ id: [answer_id], value: null });
+        newData = createNewData({ answer_id: [answer_id], value: null });
       }
     } else if (type == "RADIO") {
-      newData = createNewData({ id: answer_data.answer_id, value: null });
+      newData = createNewData({
+        answer_id: answer_data.answer_id,
+        value: null,
+      });
     } else {
-      newData = createNewData({ id: null, value: answer_data.value });
+      newData = createNewData({ answer_id: null, value: answer_data.value });
     }
     setUserAnswers({
       ...userAnswers,
@@ -78,6 +100,7 @@ function QuizContextProvider({ children }) {
         currentQuiz,
         updateQuizAnswer,
         finishQuiz,
+        takenQuizes,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { QuizContext } from "./QuizContext";
 
 function QuizList() {
-  const { quizes } = useContext(QuizContext);
+  const { quizes, takenQuizes } = useContext(QuizContext);
 
   return (
     <Grid
@@ -21,6 +21,7 @@ function QuizList() {
           description={item.description}
           key={idx}
           id={item.quiz_id}
+          taken={takenQuizes.includes(item.quiz_id)}
         />
       ))}
     </Grid>

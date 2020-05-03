@@ -6,6 +6,7 @@ function UserContextProvider({ children }) {
   const [nick, setNick] = useState("guest");
   const [logged, setLogged] = useState(false);
   const [requestResponse, setRequestResponse] = useState(null);
+  const [pass, setPass] = useState(null);
 
   async function loginUser(nick, password) {
     const resp = await fetch(`http://localhost:3000/user/login`, {
@@ -22,6 +23,7 @@ function UserContextProvider({ children }) {
 
     console.log(payload);
     setNick(nick);
+    setPass(password);
     setLogged(true);
     setRequestResponse(null);
   }
@@ -47,12 +49,14 @@ function UserContextProvider({ children }) {
   async function logoutUser() {
     setLogged(false);
     setNick("guest");
+    setPass(null);
   }
 
   return (
     <UserContext.Provider
       value={{
         nick,
+        pass,
         loginUser,
         registerUser,
         logged,
