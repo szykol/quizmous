@@ -51,6 +51,8 @@ function QuizContextProvider({ children }) {
       .catch((err) => {
         console.log(err);
       });
+
+    setCurrentQuiz(null);
   }
 
   function updateQuizAnswer(question_id, answer_data, type) {

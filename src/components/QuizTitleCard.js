@@ -19,7 +19,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function QuizTitleCard({ title, description, author, id }) {
+export default function QuizTitleCard({
+  title,
+  description,
+  author,
+  id,
+  taken,
+}) {
   const classes = useStyles();
   const { selectCurrentQuiz } = useContext(QuizContext);
   return (
@@ -49,9 +55,11 @@ export default function QuizTitleCard({ title, description, author, id }) {
           >
             Take the Quiz!
           </Button>
-          <Typography variant="body2" color="secondary" component="p">
-            This quiz has been taken
-          </Typography>
+          {taken && (
+            <Typography variant="body2" color="secondary" component="p">
+              This quiz has been taken
+            </Typography>
+          )}
         </CardActions>
       </Card>
     </Grid>
