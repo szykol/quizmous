@@ -41,8 +41,10 @@ function QuizContextProvider({ children }) {
   }
 
   function finishQuiz() {
-    setUserAnswers({ ...userAnswers, key: privateKey });
-    apiRequest(`quiz/${currentQuiz.quiz_id}/answers`, "POST", userAnswers)
+    apiRequest(`quiz/${currentQuiz.quiz_id}/answers`, "POST", {
+      ...userAnswers,
+      key: privateKey,
+    })
       .then((payload) => {
         console.log(payload);
         apiRequest(`user/quiz_taken/${currentQuiz.quiz_id}`, "POST", {
