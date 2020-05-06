@@ -42,7 +42,6 @@ export default function QuestionCard({ question, children }) {
           title: classes.title,
         }}
         title={question}
-        subheader="September 14, 2016"
       />
       <CardContent>{children}</CardContent>
     </Card>

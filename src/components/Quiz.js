@@ -5,9 +5,11 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import QuizCard from "./QuizCard";
 import { QuizContext } from "./QuizContext";
+import TextField from "@material-ui/core/TextField";
+import QuestionCard from "./QuestionCard";
 
 export default function Quiz() {
-  const { currentQuiz, finishQuiz } = useContext(QuizContext);
+  const { currentQuiz, finishQuiz, setPrivateKey } = useContext(QuizContext);
 
   return (
     <div style={{ padding: 20 }}>
@@ -30,9 +32,31 @@ export default function Quiz() {
               type={question.type}
             ></Question>
           ))}
-          <Button onClick={finishQuiz} variant="contained" color="primary">
-            Finish
-          </Button>
+
+          <QuestionCard>
+            <Grid
+              container
+              spacing={5}
+              direction="column"
+              alignItems="center"
+              justify="center"
+            >
+              <TextField
+                variant="outlined"
+                multiline
+                placeholder="Your private key here"
+                onChange={(e) => setPrivateKey(e.target.value)}
+              />
+              <Button
+                style={{ marginTop: 10 }}
+                onClick={finishQuiz}
+                variant="contained"
+                color="primary"
+              >
+                Finish
+              </Button>
+            </Grid>
+          </QuestionCard>
         </QuizCard>
       </Grid>
     </div>

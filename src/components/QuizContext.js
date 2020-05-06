@@ -8,6 +8,7 @@ function QuizContextProvider({ children }) {
   const [currentQuiz, setCurrentQuiz] = useState(null);
   const [userAnswers, setUserAnswers] = useState({});
   const [takenQuizes, setTakenQuizes] = useState([]);
+  const [privateKey, setPrivateKey] = useState("");
 
   const { nick, pass } = useContext(UserContext);
 
@@ -40,6 +41,7 @@ function QuizContextProvider({ children }) {
   }
 
   function finishQuiz() {
+    setUserAnswers({ ...userAnswers, key: privateKey });
     apiRequest(`quiz/${currentQuiz.quiz_id}/answers`, "POST", userAnswers)
       .then((payload) => {
         console.log(payload);
@@ -104,6 +106,7 @@ function QuizContextProvider({ children }) {
         updateQuizAnswer,
         finishQuiz,
         takenQuizes,
+        setPrivateKey,
       }}
     >
       {children}
