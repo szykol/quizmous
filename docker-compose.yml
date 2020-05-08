@@ -43,19 +43,6 @@ services:
     links:
       - api
     stdin_open: true
-  react-bash:
-    build: .
-    container_name: react-bash
-    hostname: react-bash
-    ports:
-      - "3000:3000"
-    volumes:
-      - ".:/usr/local/app"
-      - "/usr/local/app/node_modules"
-    depends_on:
-      - api
-    links:
-      - api
-    tty: true
-    stdin_open: true
-    entrypoint: /bin/bash
+    tty: ${REACT_TTY:-false}
+    entrypoint: ${REACT_ENTRYPOINT}
+    command: ${REACT_COMMAND:-npm start}

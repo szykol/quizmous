@@ -8,4 +8,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: build and test
-        run: ./spawn_app.sh --rebuild --non_interactive --test
+        run: REACT_COMMAND="npm test" docker-compose up react
