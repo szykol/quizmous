@@ -6,7 +6,7 @@ import Quiz from "./Quiz";
 import SignIn from "./Signin";
 import AppBar from "./AppBar";
 import QuizList from "./QuizList";
-
+import AddQuiz from "./AddQuiz";
 function Quizmous() {
   const { logged } = useContext(UserContext);
   const { currentQuiz } = useContext(QuizContext);
@@ -15,7 +15,7 @@ function Quizmous() {
     <div className="App">
       <AppBar></AppBar>
       {!logged && <SignIn></SignIn>}
-      {logged && ((currentQuiz && <Quiz />) || <QuizList />)}
+      {logged && ((currentQuiz && <Quiz />) || <AddQuiz />)}
       <footer className="footer">
         <span className="text-muted">
           <ApiVersion />
