@@ -28,7 +28,10 @@ services:
       - "PGDATABASE=quiz"
       - "PGUSER=api"
       - "PGPASSWORD=foobar"
-    entrypoint: /usr/local/api/run.py
+    stdin_open: true
+    tty: ${API_TTY:-false}
+    entrypoint: ${API_ENTRYPOINT:-/usr/local/api/run.py}
+    command: ${API_COMMAND}
   react:
     build: .
     container_name: react
