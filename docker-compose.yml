@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 services:
   postgres:
     container_name: postgres_api
@@ -6,9 +6,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - 'POSTGRES_USER=api'
-      - 'POSTGRES_PASSWORD=foobar'
-      - 'POSTGRES_DB=quiz'
+      - "POSTGRES_USER=api"
+      - "POSTGRES_PASSWORD=foobar"
+      - "POSTGRES_DB=quiz"
     volumes:
       - ./api/schema.sql:/docker-entrypoint-initdb.d/schema.sql
   api:
@@ -24,13 +24,11 @@ services:
     links:
       - postgres
     environment:
-      - 'PGHOST=postgres_api'
-      - 'PGDATABASE=quiz'
-      - 'PGUSER=api'
-      - 'PGPASSWORD=foobar'
-    tty: true
-    stdin_open: true
-    entrypoint: /bin/bash
+      - "PGHOST=postgres_api"
+      - "PGDATABASE=quiz"
+      - "PGUSER=api"
+      - "PGPASSWORD=foobar"
+    entrypoint: /usr/local/api/run.py
   react:
     build: .
     container_name: react
@@ -38,8 +36,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - '.:/usr/local/app'
-      - '/usr/local/app/node_modules'
+      - ".:/usr/local/app"
+      - "/usr/local/app/node_modules"
     depends_on:
       - api
     links:
@@ -52,8 +50,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - '.:/usr/local/app'
-      - '/usr/local/app/node_modules'
+      - ".:/usr/local/app"
+      - "/usr/local/app/node_modules"
     depends_on:
       - api
     links:
