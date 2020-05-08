@@ -7,5 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: init submodules
+        run: git submodule update --init --recursive
       - name: build and test
         run: REACT_COMMAND="npm test" docker-compose up react
