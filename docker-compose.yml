@@ -48,4 +48,4 @@ services:
     stdin_open: true
     tty: ${REACT_TTY:-false}
     entrypoint: ${REACT_ENTRYPOINT}
-    command: ${REACT_COMMAND:-npm start}
+    command: ${REACT_COMMAND-npm start}
