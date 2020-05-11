@@ -36,7 +36,7 @@ function QuizContextProvider({ children }) {
       .catch((err) => {
         console.log(err);
       });
-  }, [nick, currentQuiz]);
+  }, [nick, currentQuiz, quizCreation]);
 
   function selectCurrentQuiz(id) {
     const quiz = quizes.find((quiz) => quiz.quiz_id === id);
