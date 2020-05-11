@@ -8,22 +8,14 @@ import { QuizContext } from "./QuizContext";
 import TextField from "@material-ui/core/TextField";
 import QuestionCard from "./QuestionCard";
 import AddQuizButton from "./AddQuizButton";
+import CreateQuestion from "./CreateQuestion";
 import QuizTypeDropdown from "./QuizTypeDropdown";
 
 export default function AddQuiz() {
   const { currentQuiz, finishQuiz, setPrivateKey } = useContext(QuizContext);
 
-  function createQuestionTemplate() {
-    return {
-      question: "Your question",
-      answers: ["Perfect!", "Outstanding!", "Good"],
-      type: "RADIO",
-    };
-  }
-
-  const [questions, setQuestions] = useState([createQuestionTemplate()]);
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  // const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [questions, setQuestions] = useState([]);
 
   return (
     <div style={{ padding: 20 }}>
@@ -58,59 +50,16 @@ export default function AddQuiz() {
           />
         </Grid>
 
-        {questions.map((question, currentIdx) => (
-          <Grid
-            container
-            alignItems="center"
-            style={{ maxWidth: 300 }}
-            justify="center"
-            alignContent="center"
-            item
-            key={currentIdx}
-            xs={12}
-          >
-            <TextField
-              variant="outlined"
-              multiline
-              placeholder="Your question here"
-              value={question.question}
-              // onChange={(e) => setPrivateKey(e.target.value)}
-            />
-            <QuizTypeDropdown />
-            {questions[currentIdx].answers.map((answer, idx) => (
-              <TextField
-                key={idx}
-                variant="outlined"
-                multiline
-                placeholder="Your answer here"
-                value={answer}
-              />
-            ))}
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={(e) => {
-                let oldQuestions = [...questions];
-                let currentQuestionObj = questions[currentIdx];
-                currentQuestionObj.answers.push(null);
-                oldQuestions.pop(currentIdx);
-                setQuestions([...questions]);
-              }}
-            >
-              Another Answer
-            </Button>
-          </Grid>
+        {questions.map((question, idx) => (
+          <CreateQuestion question={question} key={idx} />
         ))}
+        <CreateQuestion question={null} />
 
         <Button
           fullWidth
           variant="contained"
           color="primary"
-          onClick={(e) => {
-            setQuestions([...questions, createQuestionTemplate()]);
-            setCurrentQuestion(currentQuestion + 1);
-          }}
+          onClick={(e) => {}}
         >
           Add Question
         </Button>
