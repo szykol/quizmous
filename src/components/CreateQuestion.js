@@ -9,11 +9,19 @@ import TextField from "@material-ui/core/TextField";
 import QuestionCard from "./QuestionCard";
 import AddQuizButton from "./AddQuizButton";
 import QuizTypeDropdown from "./QuizTypeDropdown";
+import { QuizCreatorContext } from "./QuizCreatorContext";
 
-function CreateQuestion() {
-  const [question, setQuestion] = useState("Your question");
-  const [type, setType] = useState("RADIO");
-  const [answers, setAnswers] = useState(["Perfect!", "Outstanding!", "Good"]);
+function CreateQuestion({ questionObj }) {
+  const readonly = questionObj != null;
+
+  const [question, setQuestion] = useState(
+    readonly ? questionObj.question : "Your question"
+  );
+  const [type, setType] = useState(readonly ? questionObj.type : "RADIO");
+  const [answers, setAnswers] = useState(
+    readonly ? questionObj.answers : ["Perfect!", "Outstanding!", "Good"]
+  );
+  const { pushNewQuestion } = useContext(QuizCreatorContext);
 
   return (
     <Grid
@@ -29,11 +37,12 @@ function CreateQuestion() {
         variant="outlined"
         multiline
         placeholder="Your question here"
-        value={question.question}
+        value={question}
         onChange={(e) => setQuestion(e.target.value)}
-        readonly={question != null}
+        readonly={readonly}
+        disabled={readonly}
       />
-      <QuizTypeDropdown />
+      <QuizTypeDropdown disabled={readonly} />
       {answers.map((answer, idx) => (
         <TextField
           key={idx}
@@ -47,19 +56,52 @@ function CreateQuestion() {
 
             setAnswers(newAnswers);
           }}
-          readonly={question != null}
+          readonly={readonly}
+          disabled={readonly}
         />
       ))}
-      <Button
-        fullWidth
-        variant="contained"
-        color="primary"
-        onClick={(e) => {
-          setAnswers([...answers, "Your answer here..."]);
-        }}
-      >
-        Another Answer
-      </Button>
+      {!readonly ? (
+        <>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              setAnswers([...answers, "Your answer here..."]);
+            }}
+          >
+            Another Answer
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              pushNewQuestion({
+                question,
+                type: "RADIO",
+                answers,
+                added: true,
+              });
+
+              setQuestion("Your question");
+              setAnswers(["Perfect!", "Outstanding!", "Good"]);
+              setType("RADIO");
+            }}
+          >
+            Add Question
+          </Button>
+        </>
+      ) : (
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={(e) => {}}
+        >
+          Edit Question
+        </Button>
+      )}
     </Grid>
   );
 }

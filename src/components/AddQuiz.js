@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import QuizCard from "./QuizCard";
 import { QuizContext } from "./QuizContext";
+import { QuizCreatorContext } from "./QuizCreatorContext";
 import TextField from "@material-ui/core/TextField";
 import QuestionCard from "./QuestionCard";
 import AddQuizButton from "./AddQuizButton";
@@ -13,9 +14,8 @@ import QuizTypeDropdown from "./QuizTypeDropdown";
 
 export default function AddQuiz() {
   const { currentQuiz, finishQuiz, setPrivateKey } = useContext(QuizContext);
-
-  // const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [questions, setQuestions] = useState([]);
+  const { questions } = useContext(QuizCreatorContext);
+  // const [currentQuestion, setCurrentQuestion] = useState(0
 
   return (
     <div style={{ padding: 20 }}>
@@ -51,18 +51,9 @@ export default function AddQuiz() {
         </Grid>
 
         {questions.map((question, idx) => (
-          <CreateQuestion question={question} key={idx} />
+          <CreateQuestion questionObj={question} key={idx} />
         ))}
-        <CreateQuestion question={null} />
-
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={(e) => {}}
-        >
-          Add Question
-        </Button>
+        <CreateQuestion questionObj={null} />
       </Grid>
     </div>
   );

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuizTypeDropdown() {
+export default function QuizTypeDropdown({ disabled }) {
   const classes = useStyles();
   const [type, setType] = React.useState("RADIO");
 
@@ -33,6 +33,7 @@ export default function QuizTypeDropdown() {
           id="demo-simple-select"
           value={type}
           onChange={handleChange}
+          disabled={disabled}
         >
           <MenuItem value={"YES/NO"}>YES/NO</MenuItem>
           <MenuItem value={"CHOICE"}>CHOICE</MenuItem>
