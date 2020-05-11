@@ -16,26 +16,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuizTypeDropdown({ disabled }) {
+export default function QuizTypeDropdown({ disabled, propType, handleChange }) {
   const classes = useStyles();
-  const [type, setType] = React.useState("RADIO");
-
-  const handleChange = (event) => {
-    setType(event.target.value);
-  };
 
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <InputLabel id="demo-simple-select-label">Type</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={type}
-          onChange={handleChange}
+          value={propType}
+          onChange={(e) => handleChange(e.target.value)}
           disabled={disabled}
         >
-          <MenuItem value={"YES/NO"}>YES/NO</MenuItem>
+          <MenuItem value={"YES_NO"}>YES/NO</MenuItem>
           <MenuItem value={"CHOICE"}>CHOICE</MenuItem>
           <MenuItem value={"RADIO"}>RADIO</MenuItem>
           <MenuItem value={"OPEN"}>OPEN</MenuItem>

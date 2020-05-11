@@ -25,6 +25,16 @@ function CreateQuestion({ questionObj }) {
   );
   const { pushNewQuestion } = useContext(QuizCreatorContext);
 
+  function handleChange(newType) {
+    if (newType === "YES_NO") {
+      setAnswers(["Yes", "No"]);
+    } else if (newType === "OPEN") {
+      setAnswers([]);
+    }
+
+    setType(newType);
+  }
+
   return (
     <Grid
       container
@@ -44,7 +54,11 @@ function CreateQuestion({ questionObj }) {
         readonly={readonly}
         disabled={readonly}
       />
-      <QuizTypeDropdown disabled={readonly} />
+      <QuizTypeDropdown
+        handleChange={handleChange}
+        propType={type}
+        disabled={readonly}
+      />
       {answers.map((answer, idx) => (
         <TextField
           key={idx}
@@ -64,16 +78,18 @@ function CreateQuestion({ questionObj }) {
       ))}
       {!readonly ? (
         <>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              setAnswers([...answers, "Your answer here..."]);
-            }}
-          >
-            Another Answer
-          </Button>
+          {type !== "OPEN" && type !== "YES_NO" && (
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={(e) => {
+                setAnswers([...answers, "Your answer here..."]);
+              }}
+            >
+              Another Answer
+            </Button>
+          )}
           <Button
             fullWidth
             variant="contained"
@@ -86,14 +102,14 @@ function CreateQuestion({ questionObj }) {
               });
               pushNewQuestion({
                 question,
-                type: "RADIO",
+                type: type,
                 answers: newAnswers,
                 required: true,
               });
 
+              setType("RADIO");
               setQuestion("Your question");
               setAnswers(["Perfect!", "Outstanding!", "Good"]);
-              setType("RADIO");
             }}
           >
             Add Question
