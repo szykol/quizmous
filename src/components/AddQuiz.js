@@ -13,9 +13,9 @@ import CreateQuestion from "./CreateQuestion";
 import QuizTypeDropdown from "./QuizTypeDropdown";
 
 export default function AddQuiz() {
-  const { currentQuiz, finishQuiz, setPrivateKey } = useContext(QuizContext);
-  const { questions } = useContext(QuizCreatorContext);
-  // const [currentQuestion, setCurrentQuestion] = useState(0
+  const { questions, submitQuiz } = useContext(QuizCreatorContext);
+  const [name, setName] = useState("Quiz Name");
+  const [desc, setDesc] = useState("Quiz Description");
 
   return (
     <div style={{ padding: 20 }}>
@@ -39,14 +39,14 @@ export default function AddQuiz() {
             variant="outlined"
             multiline
             placeholder="Quiz Name"
-            // onChange={(e) => setPrivateKey(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
 
           <TextField
             variant="outlined"
             multiline
             placeholder="Quiz Description"
-            // onChange={(e) => setPrivateKey(e.target.value)}
+            onChange={(e) => setDesc(e.target.value)}
           />
         </Grid>
 
@@ -54,6 +54,16 @@ export default function AddQuiz() {
           <CreateQuestion questionObj={question} key={idx} />
         ))}
         <CreateQuestion questionObj={null} />
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={(e) => {
+            submitQuiz(name, desc);
+          }}
+        >
+          Submit Quiz
+        </Button>
       </Grid>
     </div>
   );

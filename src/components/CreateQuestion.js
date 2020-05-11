@@ -19,7 +19,9 @@ function CreateQuestion({ questionObj }) {
   );
   const [type, setType] = useState(readonly ? questionObj.type : "RADIO");
   const [answers, setAnswers] = useState(
-    readonly ? questionObj.answers : ["Perfect!", "Outstanding!", "Good"]
+    readonly
+      ? questionObj.answers.map((answer) => answer.answer)
+      : ["Perfect!", "Outstanding!", "Good"]
   );
   const { pushNewQuestion } = useContext(QuizCreatorContext);
 
@@ -77,11 +79,16 @@ function CreateQuestion({ questionObj }) {
             variant="contained"
             color="primary"
             onClick={(e) => {
+              const newAnswers = answers.map((answer) => {
+                return {
+                  answer,
+                };
+              });
               pushNewQuestion({
                 question,
                 type: "RADIO",
-                answers,
-                added: true,
+                answers: newAnswers,
+                required: true,
               });
 
               setQuestion("Your question");

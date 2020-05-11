@@ -9,7 +9,7 @@ function QuizContextProvider({ children }) {
   const [userAnswers, setUserAnswers] = useState({});
   const [takenQuizes, setTakenQuizes] = useState([]);
   const [privateKey, setPrivateKey] = useState("");
-
+  const [quizCreation, setQuizCreation] = useState(false);
   const { nick, pass } = useContext(UserContext);
 
   useEffect(() => {
@@ -109,6 +109,8 @@ function QuizContextProvider({ children }) {
         finishQuiz,
         takenQuizes,
         setPrivateKey,
+        quizCreation,
+        setQuizCreation,
       }}
     >
       {children}
