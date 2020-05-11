@@ -18,21 +18,25 @@ function QuizContextProvider({ children }) {
         console.log(quizes);
         setQuizes(quizes);
 
+        let promises = [];
         for (let q of quizes) {
-          apiRequest(`user/${nick}/quiz_taken/${q.quiz_id}`, "GET").then(
-            (resp) => {
-              if (resp.taken) {
-                console.log([...takenQuizes, q.quiz_id]);
-                setTakenQuizes([...takenQuizes, q.quiz_id]);
+          promises.push(
+            apiRequest(`user/${nick}/quiz_taken/${q.quiz_id}`, "GET").then(
+              (resp) => {
+                if (resp.taken) {
+                  return q.quiz_id;
+                }
               }
-            }
+            )
           );
         }
+
+        Promise.all(promises).then((taken) => setTakenQuizes(taken));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [nick]);
+  }, [nick, currentQuiz]);
 
   function selectCurrentQuiz(id) {
     const quiz = quizes.find((quiz) => quiz.quiz_id === id);
