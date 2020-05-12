@@ -2,6 +2,8 @@ import React, { useState, createContext, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext";
 import apiRequest from "../utils/request";
 import { QuizContext } from "./QuizContext";
+import { ToastContainer, toast } from "react-toastify";
+
 const QuizCreatorContext = createContext();
 
 function QuizCreatorContextProvider({ children }) {
@@ -29,6 +31,7 @@ function QuizCreatorContextProvider({ children }) {
     apiRequest("quiz", "POST", quiz)
       .then((resp) => {
         console.log("Quiz added sucessfuly!");
+        toast.success("Quiz added successfuly", { autoClose: 3000 });
         setQuizCreation(false);
       })
       .catch((err) => console.error(`Jeblo ${err}`));

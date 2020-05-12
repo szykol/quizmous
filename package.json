@@ -15,6 +15,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "react-toastify": "^6.0.2",
     "react-uid": "^2.2.0",
     "toml": "^3.0.0"
   },
