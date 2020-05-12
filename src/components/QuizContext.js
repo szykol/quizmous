@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext";
 import apiRequest from "../utils/request";
+import wrap_payload from "../utils/jwt";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "@material-ui/core/Button";
 
@@ -47,6 +48,14 @@ function QuizContextProvider({ children }) {
     setCurrentQuiz(quiz);
   }
 
+  function generateQuizToken() {
+    const usedObj = { currentQuiz, userAnswers, privateKey, iat: 100, nick };
+    console.log(usedObj);
+    const token = wrap_payload(usedObj);
+
+    return token;
+  }
+
   function Copyable({ message, token }) {
     return (
       <div>
@@ -65,11 +74,11 @@ function QuizContextProvider({ children }) {
 
   function finishQuiz() {
     const taken = takenQuizes.includes(currentQuiz.quiz_id);
-
+    const token = generateQuizToken();
     if (!taken) {
       apiRequest(`quiz/${currentQuiz.quiz_id}/answers`, "POST", {
         ...userAnswers,
-        key: privateKey,
+        key: token,
       })
         .then((payload) => {
           console.log(payload);
@@ -78,7 +87,7 @@ function QuizContextProvider({ children }) {
             password: pass,
           });
           toast.success(
-            <Copyable message="Quiz finished successfully." token="token" />
+            <Copyable message="Quiz finished successfully." token={token} />
           );
         })
         .catch((err) => {
@@ -86,7 +95,7 @@ function QuizContextProvider({ children }) {
         });
     } else {
       toast.success(
-        <Copyable message="Quiz has already been taken." token="token" />
+        <Copyable message="Quiz has already been taken." token={token} />
       );
     }
 
