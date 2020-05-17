@@ -60,21 +60,40 @@ function CreateQuestion({ questionObj }) {
         disabled={readonly}
       />
       {answers.map((answer, idx) => (
-        <TextField
-          key={idx}
-          variant="outlined"
-          multiline
-          placeholder="Your answer here"
-          value={answers[idx]}
-          onChange={(e) => {
-            let newAnswers = [...answers];
-            newAnswers[idx] = e.target.value;
+        <>
+          <div style={{ display: "inline-flex" }}>
+            <div>
+              <TextField
+                key={idx}
+                variant="outlined"
+                multiline
+                placeholder="Your answer here"
+                value={answers[idx]}
+                onChange={(e) => {
+                  let newAnswers = [...answers];
+                  newAnswers[idx] = e.target.value;
 
-            setAnswers(newAnswers);
-          }}
-          readonly={readonly}
-          disabled={readonly}
-        />
+                  setAnswers(newAnswers);
+                }}
+                readonly={readonly}
+                disabled={readonly}
+              />
+            </div>
+            <div style={{ alignSelf: "center" }}>
+              <Button
+                display="inline"
+                onClick={(e) => {
+                  const newAnswers = answers.filter(
+                    (item) => item !== answers[idx]
+                  );
+                  setAnswers(newAnswers);
+                }}
+              >
+                -
+              </Button>
+            </div>
+          </div>
+        </>
       ))}
       {!readonly ? (
         <>
