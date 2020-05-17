@@ -34,7 +34,7 @@ export default function Question({
           {answers.map((answer, idx) => (
             <FormControlLabel
               key={answer.answer_id}
-              value={answer.answer_id}
+              value={`${answer.answer_id}`}
               control={<Radio />}
               label={answer.answer}
             />
