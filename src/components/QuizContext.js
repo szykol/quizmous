@@ -1,6 +1,10 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext";
 import apiRequest from "../utils/request";
+import wrap_payload from "../utils/jwt";
+import { ToastContainer, toast } from "react-toastify";
+import Button from "@material-ui/core/Button";
+
 const QuizContext = createContext();
 
 function QuizContextProvider({ children }) {
@@ -9,7 +13,7 @@ function QuizContextProvider({ children }) {
   const [userAnswers, setUserAnswers] = useState({});
   const [takenQuizes, setTakenQuizes] = useState([]);
   const [privateKey, setPrivateKey] = useState("");
-
+  const [quizCreation, setQuizCreation] = useState(false);
   const { nick, pass } = useContext(UserContext);
 
   useEffect(() => {
@@ -18,21 +22,25 @@ function QuizContextProvider({ children }) {
         console.log(quizes);
         setQuizes(quizes);
 
+        let promises = [];
         for (let q of quizes) {
-          apiRequest(`user/${nick}/quiz_taken/${q.quiz_id}`, "GET").then(
-            (resp) => {
-              if (resp.taken) {
-                console.log([...takenQuizes, q.quiz_id]);
-                setTakenQuizes([...takenQuizes, q.quiz_id]);
+          promises.push(
+            apiRequest(`user/${nick}/quiz_taken/${q.quiz_id}`, "GET").then(
+              (resp) => {
+                if (resp.taken) {
+                  return q.quiz_id;
+                }
               }
-            }
+            )
           );
         }
+
+        Promise.all(promises).then((taken) => setTakenQuizes(taken));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [nick]);
+  }, [nick, currentQuiz, quizCreation]);
 
   function selectCurrentQuiz(id) {
     const quiz = quizes.find((quiz) => quiz.quiz_id === id);
@@ -40,21 +48,56 @@ function QuizContextProvider({ children }) {
     setCurrentQuiz(quiz);
   }
 
+  function generateQuizToken() {
+    const usedObj = { currentQuiz, userAnswers, privateKey, iat: 100, nick };
+    console.log(usedObj);
+    const token = wrap_payload(usedObj);
+
+    return token;
+  }
+
+  function Copyable({ message, token }) {
+    return (
+      <div>
+        {message}
+        Your token is: {token}
+        <Button
+          onClick={(e) => {
+            navigator.clipboard.writeText(token);
+          }}
+        >
+          COPY
+        </Button>
+      </div>
+    );
+  }
+
   function finishQuiz() {
-    apiRequest(`quiz/${currentQuiz.quiz_id}/answers`, "POST", {
-      ...userAnswers,
-      key: privateKey,
-    })
-      .then((payload) => {
-        console.log(payload);
-        apiRequest(`user/quiz_taken/${currentQuiz.quiz_id}`, "POST", {
-          nick,
-          password: pass,
-        });
+    const taken = takenQuizes.includes(currentQuiz.quiz_id);
+    const token = generateQuizToken();
+    if (!taken) {
+      apiRequest(`quiz/${currentQuiz.quiz_id}/answers`, "POST", {
+        ...userAnswers,
+        key: token,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((payload) => {
+          console.log(payload);
+          apiRequest(`user/quiz_taken/${currentQuiz.quiz_id}`, "POST", {
+            nick,
+            password: pass,
+          });
+          toast.success(
+            <Copyable message="Quiz finished successfully." token={token} />
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.success(
+        <Copyable message="Quiz has already been taken." token={token} />
+      );
+    }
 
     setTakenQuizes([...takenQuizes, currentQuiz.quiz_id]);
     setCurrentQuiz(null);
@@ -109,6 +152,8 @@ function QuizContextProvider({ children }) {
         finishQuiz,
         takenQuizes,
         setPrivateKey,
+        quizCreation,
+        setQuizCreation,
       }}
     >
       {children}

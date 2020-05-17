@@ -1,5 +1,7 @@
 import React, { useState, createContext } from "react";
 import wrap_payload from "../utils/jwt";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const UserContext = createContext();
 
 function UserContextProvider({ children }) {
@@ -26,6 +28,7 @@ function UserContextProvider({ children }) {
     setPass(password);
     setLogged(true);
     setRequestResponse(null);
+    toast.info("Logged in successfuly !", { autoClose: 3000 });
   }
 
   async function registerUser(nick, password) {
@@ -44,12 +47,14 @@ function UserContextProvider({ children }) {
     console.log(payload);
     setLogged(false);
     setRequestResponse(null);
+    toast.info("Registered successfuly !", { autoClose: 3000 });
   }
 
   async function logoutUser() {
     setLogged(false);
     setNick("guest");
     setPass(null);
+    toast.info("Logged out successfuly !", { autoClose: 3000 });
   }
 
   return (
