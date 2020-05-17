@@ -9,6 +9,7 @@ function UserContextProvider({ children }) {
   const [logged, setLogged] = useState(false);
   const [requestResponse, setRequestResponse] = useState(null);
   const [pass, setPass] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   async function loginUser(nick, password) {
     const resp = await fetch(`http://localhost:3000/user/login`, {
@@ -28,6 +29,7 @@ function UserContextProvider({ children }) {
     setPass(password);
     setLogged(true);
     setRequestResponse(null);
+    setUserId(payload.user.user_id);
     toast.info("Logged in successfuly !", { autoClose: 3000 });
   }
 
@@ -67,6 +69,7 @@ function UserContextProvider({ children }) {
         logged,
         requestResponse,
         logoutUser,
+        userId,
       }}
     >
       {children}

@@ -9,7 +9,7 @@ const QuizCreatorContext = createContext();
 function QuizCreatorContextProvider({ children }) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const { nick, pass } = useContext(UserContext);
+  const { nick, userId } = useContext(UserContext);
   const { setQuizCreation } = useContext(QuizContext);
   function pushNewQuestion(question) {
     setQuestions([...questions, question]);
@@ -21,7 +21,7 @@ function QuizCreatorContextProvider({ children }) {
       description: desc,
       questions,
       author: {
-        user_id: 2,
+        user_id: userId,
         nick,
       },
     };
