@@ -11,12 +11,13 @@ import QuestionCard from "./QuestionCard";
 import AddQuizButton from "./AddQuizButton";
 import CreateQuestion from "./CreateQuestion";
 import QuizTypeDropdown from "./QuizTypeDropdown";
+import { useHistory } from "react-router-dom";
 
 export default function AddQuiz() {
   const { questions, submitQuiz } = useContext(QuizCreatorContext);
   const [name, setName] = useState("Quiz Name");
   const [desc, setDesc] = useState("Quiz Description");
-
+  let history = useHistory();
   return (
     <div style={{ padding: 20 }}>
       <Grid
@@ -59,6 +60,7 @@ export default function AddQuiz() {
           variant="contained"
           color="primary"
           onClick={(e) => {
+            history.goBack();
             submitQuiz(name, desc);
           }}
         >

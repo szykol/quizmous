@@ -7,9 +7,11 @@ import QuizCard from "./QuizCard";
 import { QuizContext } from "./QuizContext";
 import TextField from "@material-ui/core/TextField";
 import QuestionCard from "./QuestionCard";
+import { useHistory } from "react-router-dom";
 
 export default function Quiz() {
   const { currentQuiz, finishQuiz, setPrivateKey } = useContext(QuizContext);
+  let history = useHistory();
 
   return (
     <div style={{ padding: 20 }}>

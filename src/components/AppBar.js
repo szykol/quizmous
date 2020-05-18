@@ -5,6 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DenseAppBar() {
   const classes = useStyles();
   const { nick, logged, logoutUser } = useContext(UserContext);
-
+  let history = useHistory();
   return (
     <div className={classes.root}>
       <AppBar position="sticky" color="default">
@@ -33,7 +34,13 @@ export default function DenseAppBar() {
           </Typography>
           <Typography className={classes.nick}>Hello, {nick}</Typography>
           {logged && (
-            <Button onClick={logoutUser} color="primary">
+            <Button
+              onClick={(e) => {
+                history.push("/");
+                logoutUser(e);
+              }}
+              color="primary"
+            >
               Logout
             </Button>
           )}

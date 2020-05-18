@@ -4,6 +4,7 @@ import apiRequest from "../utils/request";
 import wrap_payload from "../utils/jwt";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 
 const QuizContext = createContext();
 
@@ -15,7 +16,7 @@ function QuizContextProvider({ children }) {
   const [privateKey, setPrivateKey] = useState("");
   const [quizCreation, setQuizCreation] = useState(false);
   const { nick, pass } = useContext(UserContext);
-
+  let history = useHistory();
   useEffect(() => {
     apiRequest("quiz", "GET")
       .then((quizes) => {
@@ -89,6 +90,7 @@ function QuizContextProvider({ children }) {
           toast.success(
             <Copyable message="Quiz finished successfully." token={token} />
           );
+          history.goBack();
         })
         .catch((err) => {
           console.log(err);
@@ -97,10 +99,9 @@ function QuizContextProvider({ children }) {
       toast.success(
         <Copyable message="Quiz has already been taken." token={token} />
       );
+      history.goBack();
     }
-
     setTakenQuizes([...takenQuizes, currentQuiz.quiz_id]);
-    setCurrentQuiz(null);
   }
 
   function updateQuizAnswer(question_id, answer_data, type) {

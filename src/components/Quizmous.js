@@ -7,6 +7,9 @@ import SignIn from "./Signin";
 import AppBar from "./AppBar";
 import QuizList from "./QuizList";
 import AddQuiz from "./AddQuiz";
+import PrivateRoute from "./PrivateRoute";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 function Quizmous() {
   const { logged } = useContext(UserContext);
   const { currentQuiz, quizCreation } = useContext(QuizContext);
@@ -14,11 +17,23 @@ function Quizmous() {
   return (
     <div className="App">
       <AppBar></AppBar>
-      {!logged && <SignIn></SignIn>}
-      {logged &&
-        ((currentQuiz && <Quiz />) || (quizCreation && <AddQuiz />) || (
+      <Switch>
+        <PrivateRoute exact path="/quiz_list">
           <QuizList />
-        ))}
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/take_quiz">
+          <Quiz />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/add_new_quiz">
+          <AddQuiz />
+        </PrivateRoute>
+
+        <Route path="/">
+          <SignIn />
+        </Route>
+      </Switch>
       <footer className="footer">
         <span className="text-muted">
           <ApiVersion />

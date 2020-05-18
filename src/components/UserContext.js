@@ -2,6 +2,8 @@ import React, { useState, createContext } from "react";
 import wrap_payload from "../utils/jwt";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useHistory } from "react-router-dom";
+
 const UserContext = createContext();
 
 function UserContextProvider({ children }) {
@@ -10,6 +12,7 @@ function UserContextProvider({ children }) {
   const [requestResponse, setRequestResponse] = useState(null);
   const [pass, setPass] = useState(null);
   const [userId, setUserId] = useState(null);
+  let history = useHistory();
 
   async function loginUser(nick, password) {
     const resp = await fetch(`http://localhost:3000/user/login`, {
@@ -31,6 +34,7 @@ function UserContextProvider({ children }) {
     setRequestResponse(null);
     setUserId(payload.user.user_id);
     toast.info("Logged in successfuly !", { autoClose: 3000 });
+    history.push("/quiz_list");
   }
 
   async function registerUser(nick, password) {

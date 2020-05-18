@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
 import { QuizContext } from "./QuizContext";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -28,6 +29,7 @@ export default function QuizTitleCard({
 }) {
   const classes = useStyles();
   const { selectCurrentQuiz } = useContext(QuizContext);
+  let history = useHistory();
   return (
     <Grid
       container
@@ -50,7 +52,10 @@ export default function QuizTitleCard({
         <CardActions>
           <Button
             size="small"
-            onClick={(e) => selectCurrentQuiz(id)}
+            onClick={(e) => {
+              history.push("/take_quiz");
+              selectCurrentQuiz(id);
+            }}
             color="primary"
           >
             Take the Quiz!

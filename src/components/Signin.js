@@ -13,6 +13,7 @@ import Container from "@material-ui/core/Container";
 import { useState } from "react";
 import Alert from "@material-ui/lab/Alert";
 import { UserContext } from "./UserContext";
+import { Route, Redirect } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -52,7 +53,9 @@ export default function SignIn({ onLogin }) {
   const [nick, setNick] = useState();
   const [pass, setPass] = useState();
   const [register, setRegister] = useState(false);
-  const { loginUser, registerUser, requestResponse } = useContext(UserContext);
+  const { logged, loginUser, registerUser, requestResponse } = useContext(
+    UserContext
+  );
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -64,7 +67,7 @@ export default function SignIn({ onLogin }) {
     }
   };
 
-  return (
+  return !logged ? (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -132,5 +135,11 @@ export default function SignIn({ onLogin }) {
         <Copyright />
       </Box>
     </Container>
+  ) : (
+    <Redirect
+      to={{
+        pathname: "/quiz_list",
+      }}
+    />
   );
 }
