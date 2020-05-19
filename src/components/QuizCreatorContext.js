@@ -35,6 +35,9 @@ function QuizCreatorContextProvider({ children }) {
         setQuizCreation(false);
       })
       .catch((err) => console.error(`Jeblo ${err}`));
+
+    setQuestions([]);
+    setCurrentQuestion([]);
   }
 
   return (

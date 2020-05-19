@@ -3,6 +3,7 @@ import QuizTitleCard from "./QuizTitleCard";
 import Grid from "@material-ui/core/Grid";
 import { QuizContext } from "./QuizContext";
 import AddQuizButton from "./AddQuizButton";
+import TokenCard from "./TokenCard";
 function QuizList() {
   const { quizes, takenQuizes } = useContext(QuizContext);
 

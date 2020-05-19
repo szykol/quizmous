@@ -16,6 +16,8 @@ function QuizContextProvider({ children }) {
   const [privateKey, setPrivateKey] = useState("");
   const [quizCreation, setQuizCreation] = useState(false);
   const { nick, pass } = useContext(UserContext);
+
+  const [currentToken, setCurrentToken] = useState(null);
   let history = useHistory();
   useEffect(() => {
     apiRequest("quiz", "GET")
@@ -44,6 +46,9 @@ function QuizContextProvider({ children }) {
   }, [nick, currentQuiz, quizCreation]);
 
   function selectCurrentQuiz(id) {
+    setCurrentQuiz(null);
+    setUserAnswers([]);
+
     const quiz = quizes.find((quiz) => quiz.quiz_id === id);
 
     setCurrentQuiz(quiz);
@@ -61,13 +66,13 @@ function QuizContextProvider({ children }) {
     return (
       <div>
         {message}
-        Your token is: {token}
+        Copy your token!
         <Button
           onClick={(e) => {
             navigator.clipboard.writeText(token);
           }}
         >
-          COPY
+          COPY TOKEN
         </Button>
       </div>
     );
@@ -143,6 +148,13 @@ function QuizContextProvider({ children }) {
     });
   }
 
+  function fetchAnswersFromToken() {
+    const token = currentToken;
+    return apiRequest(`check_token`, "POST", {
+      token,
+    });
+  }
+
   return (
     <QuizContext.Provider
       value={{
@@ -155,6 +167,9 @@ function QuizContextProvider({ children }) {
         setPrivateKey,
         quizCreation,
         setQuizCreation,
+        fetchAnswersFromToken,
+        setCurrentToken,
+        currentToken,
       }}
     >
       {children}

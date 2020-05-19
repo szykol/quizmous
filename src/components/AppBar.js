@@ -5,7 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,15 +34,20 @@ export default function DenseAppBar() {
           </Typography>
           <Typography className={classes.nick}>Hello, {nick}</Typography>
           {logged && (
-            <Button
-              onClick={(e) => {
-                history.push("/");
-                logoutUser(e);
-              }}
-              color="primary"
-            >
-              Logout
-            </Button>
+            <>
+              <Link to="/check_answers">
+                <Button color="primary">Check answers</Button>
+              </Link>
+              <Button
+                onClick={(e) => {
+                  history.push("/");
+                  logoutUser(e);
+                }}
+                color="primary"
+              >
+                Logout
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>

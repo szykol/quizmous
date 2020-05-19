@@ -8,7 +8,9 @@ import AppBar from "./AppBar";
 import QuizList from "./QuizList";
 import AddQuiz from "./AddQuiz";
 import PrivateRoute from "./PrivateRoute";
+import TokenCard from "./TokenCard";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import DisplayAnswers from "./DisplayAnswers";
 
 function Quizmous() {
   const { logged } = useContext(UserContext);
@@ -28,6 +30,14 @@ function Quizmous() {
 
         <PrivateRoute exact path="/add_new_quiz">
           <AddQuiz />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/check_answers">
+          <TokenCard />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/display_answers">
+          <DisplayAnswers />
         </PrivateRoute>
 
         <Route path="/">
