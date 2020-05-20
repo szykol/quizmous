@@ -14,9 +14,10 @@ import QuizTypeDropdown from "./QuizTypeDropdown";
 import { useHistory } from "react-router-dom";
 
 export default function AddQuiz() {
-  const { questions, submitQuiz } = useContext(QuizCreatorContext);
-  const [name, setName] = useState("Quiz Name");
-  const [desc, setDesc] = useState("Quiz Description");
+  const { questions, submitQuiz, setName, setDesc, canSubmit } = useContext(
+    QuizCreatorContext
+  );
+
   let history = useHistory();
   return (
     <div style={{ padding: 20 }}>
@@ -59,10 +60,15 @@ export default function AddQuiz() {
         <Button
           variant="contained"
           color="primary"
-          onClick={(e) => {
-            history.goBack();
-            submitQuiz(name, desc);
-          }}
+          onClick={
+            canSubmit
+              ? (e) => {
+                  history.goBack();
+                  submitQuiz();
+                }
+              : null
+          }
+          disabled={!canSubmit}
         >
           Submit Quiz
         </Button>

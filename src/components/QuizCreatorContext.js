@@ -8,14 +8,23 @@ const QuizCreatorContext = createContext();
 
 function QuizCreatorContextProvider({ children }) {
   const [questions, setQuestions] = useState([]);
+  const [name, setName] = useState(null);
+  const [desc, setDesc] = useState(null);
+  const [canSubmit, setCanSubmit] = useState(false);
+
   const [currentQuestion, setCurrentQuestion] = useState(null);
+
   const { nick, userId } = useContext(UserContext);
   const { setQuizCreation } = useContext(QuizContext);
   function pushNewQuestion(question) {
     setQuestions([...questions, question]);
   }
 
-  function submitQuiz(name, desc) {
+  useEffect(() => {
+    setCanSubmit(questions.length > 0 && name && desc);
+  }, [name, desc, questions]);
+
+  function submitQuiz() {
     const quiz = {
       name,
       description: desc,
@@ -53,6 +62,9 @@ function QuizCreatorContextProvider({ children }) {
         pushNewQuestion,
         submitQuiz,
         removeQuestion,
+        setName,
+        setDesc,
+        canSubmit,
       }}
     >
       {children}
