@@ -16,6 +16,7 @@ function QuizContextProvider({ children }) {
   const [privateKey, setPrivateKey] = useState("");
   const [quizCreation, setQuizCreation] = useState(false);
   const { nick, pass } = useContext(UserContext);
+  const [canSubmit, setCanSubmit] = useState(false);
 
   const [currentToken, setCurrentToken] = useState(null);
   let history = useHistory();
@@ -45,8 +46,22 @@ function QuizContextProvider({ children }) {
       });
   }, [nick, currentQuiz, quizCreation]);
 
+  useEffect(() => {
+    if (userAnswers && currentQuiz) {
+      setCanSubmit(
+        Object.keys(userAnswers).length >= currentQuiz.questions.length &&
+          privateKey.trim() !== ""
+      );
+      console.log(
+        Object.keys(userAnswers).length >= currentQuiz.questions.length &&
+          privateKey !== ""
+      );
+    }
+  }, [userAnswers, privateKey]);
+
   function selectCurrentQuiz(id) {
     setCurrentQuiz(null);
+    setCanSubmit(false);
     setUserAnswers([]);
 
     const quiz = quizes.find((quiz) => quiz.quiz_id === id);
@@ -170,6 +185,7 @@ function QuizContextProvider({ children }) {
         fetchAnswersFromToken,
         setCurrentToken,
         currentToken,
+        canSubmit,
       }}
     >
       {children}

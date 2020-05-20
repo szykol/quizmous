@@ -10,7 +10,9 @@ import QuestionCard from "./QuestionCard";
 import { useHistory } from "react-router-dom";
 
 export default function Quiz() {
-  const { currentQuiz, finishQuiz, setPrivateKey } = useContext(QuizContext);
+  const { currentQuiz, finishQuiz, setPrivateKey, canSubmit } = useContext(
+    QuizContext
+  );
   let history = useHistory();
 
   return (
@@ -51,8 +53,9 @@ export default function Quiz() {
               />
               <Button
                 style={{ marginTop: 10 }}
-                onClick={finishQuiz}
+                onClick={canSubmit ? finishQuiz : null}
                 variant="contained"
+                disabled={!canSubmit}
                 color="primary"
               >
                 Finish

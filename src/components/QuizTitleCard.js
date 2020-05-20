@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
 import { QuizContext } from "./QuizContext";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +30,8 @@ export default function QuizTitleCard({
 }) {
   const classes = useStyles();
   const { selectCurrentQuiz } = useContext(QuizContext);
+  const { isAdmin } = useContext(UserContext);
+
   let history = useHistory();
   return (
     <Grid
@@ -60,6 +63,18 @@ export default function QuizTitleCard({
           >
             Take the Quiz!
           </Button>
+          {isAdmin && (
+            <Button
+              size="small"
+              onClick={(e) => {
+                history.push("/view_quiz_results");
+                selectCurrentQuiz(id);
+              }}
+              color="primary"
+            >
+              View results!
+            </Button>
+          )}
           {taken && (
             <Typography variant="body2" color="secondary" component="p">
               This quiz has been taken

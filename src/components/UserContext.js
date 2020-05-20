@@ -12,6 +12,7 @@ function UserContextProvider({ children }) {
   const [requestResponse, setRequestResponse] = useState(null);
   const [pass, setPass] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null);
   let history = useHistory();
 
   async function loginUser(nick, password) {
@@ -33,6 +34,8 @@ function UserContextProvider({ children }) {
     setLogged(true);
     setRequestResponse(null);
     setUserId(payload.user.user_id);
+    setIsAdmin(payload.user.is_admin);
+
     toast.info("Logged in successfuly !", { autoClose: 3000 });
     history.push("/quiz_list");
   }
@@ -74,6 +77,7 @@ function UserContextProvider({ children }) {
         requestResponse,
         logoutUser,
         userId,
+        isAdmin,
       }}
     >
       {children}

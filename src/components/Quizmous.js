@@ -11,7 +11,8 @@ import PrivateRoute from "./PrivateRoute";
 import TokenCard from "./TokenCard";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import DisplayAnswers from "./DisplayAnswers";
-
+import AdminRoute from "./AdminRoute";
+import DisplayQuizResults from "./DisplayQuizResults";
 function Quizmous() {
   const { logged } = useContext(UserContext);
   const { currentQuiz, quizCreation } = useContext(QuizContext);
@@ -39,6 +40,10 @@ function Quizmous() {
         <PrivateRoute exact path="/display_answers">
           <DisplayAnswers />
         </PrivateRoute>
+
+        <AdminRoute exact path="/view_quiz_results">
+          <DisplayQuizResults />
+        </AdminRoute>
 
         <Route path="/">
           <SignIn />
