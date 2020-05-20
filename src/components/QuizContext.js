@@ -138,12 +138,15 @@ function QuizContextProvider({ children }) {
     if (type == "CHOICE") {
       const { answer_id, checked } = answer_data;
 
+      // console.log(currentAnswer);
       if (currentAnswer) {
         let new_array = null;
         if (checked) {
           new_array = [...currentAnswer.answer_id, answer_id];
         } else {
-          new_array = currentAnswer.id.filter((val) => val !== answer_id);
+          new_array = currentAnswer.answer_id.filter(
+            (val) => val !== answer_id
+          );
         }
         newData = createNewData({ answer_id: new_array, value: null });
       } else {
