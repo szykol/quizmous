@@ -23,7 +23,7 @@ function CreateQuestion({ questionObj }) {
       ? questionObj.answers.map((answer) => answer.answer)
       : ["Perfect!", "Outstanding!", "Good"]
   );
-  const { pushNewQuestion } = useContext(QuizCreatorContext);
+  const { pushNewQuestion, removeQuestion } = useContext(QuizCreatorContext);
 
   function handleChange(newType) {
     if (newType === "YES_NO") {
@@ -139,9 +139,11 @@ function CreateQuestion({ questionObj }) {
           fullWidth
           variant="contained"
           color="primary"
-          onClick={(e) => {}}
+          onClick={(e) => {
+            removeQuestion(question);
+          }}
         >
-          Edit Question
+          Remove Question
         </Button>
       )}
     </Grid>

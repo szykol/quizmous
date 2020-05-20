@@ -40,6 +40,11 @@ function QuizCreatorContextProvider({ children }) {
     setCurrentQuestion([]);
   }
 
+  function removeQuestion(question) {
+    const newQuestions = questions.filter((el) => el.question !== question);
+    setQuestions(newQuestions);
+  }
+
   return (
     <QuizCreatorContext.Provider
       value={{
@@ -47,6 +52,7 @@ function QuizCreatorContextProvider({ children }) {
         currentQuestion,
         pushNewQuestion,
         submitQuiz,
+        removeQuestion,
       }}
     >
       {children}
