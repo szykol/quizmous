@@ -8,8 +8,8 @@ const QuizCreatorContext = createContext();
 
 function QuizCreatorContextProvider({ children }) {
   const [questions, setQuestions] = useState([]);
-  const [name, setName] = useState(null);
-  const [desc, setDesc] = useState(null);
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
 
   const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -21,7 +21,9 @@ function QuizCreatorContextProvider({ children }) {
   }
 
   useEffect(() => {
-    setCanSubmit(questions.length > 0 && name && desc);
+    setCanSubmit(
+      questions.length > 0 && name.trim() !== "" && desc.trim() !== ""
+    );
   }, [name, desc, questions]);
 
   function submitQuiz() {
