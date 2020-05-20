@@ -67,7 +67,7 @@ export default function TokenCard() {
         <TextField
           variant="outlined"
           multiline
-          placeholder="Your question here"
+          placeholder="Your token here"
           // value={question}
           onChange={(e) => {
             setToken(e.target.value);
