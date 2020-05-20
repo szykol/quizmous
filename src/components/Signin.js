@@ -19,8 +19,12 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.github.com/szykol/quizmous">
+        Quizmous
+      </Link>
+      {"/"}
+      <Link color="inherit" href="https://www.github.com/szykol/quizmous-api">
+        QuizmousAPI
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -102,10 +106,6 @@ export default function SignIn({ onLogin }) {
           {requestResponse && (
             <Alert severity="error">{requestResponse.message}</Alert>
           )}
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -114,7 +114,7 @@ export default function SignIn({ onLogin }) {
             className={classes.submit}
             onClick={(e) => submitHandler(e)}
           >
-            Sign In
+            {register ? "Sign up" : "Sign in"}
           </Button>
           <Grid container>
             <Grid item>
