@@ -113,6 +113,7 @@ function QuizContextProvider({ children }) {
           history.goBack();
         })
         .catch((err) => {
+          toast.success(<Copyable message={`Error ${err.message}`} />);
           console.log(err);
         });
     } else {

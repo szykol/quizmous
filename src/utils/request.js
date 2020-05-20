@@ -21,17 +21,22 @@ export default async function apiRequest(
         },
         method,
       });
+
       const data = await response.json();
+      if (response.status > 400) throw data;
       return data;
     } else {
       const response = await fetch(`${url}/${endpoint}`, {
         method,
         body: payload,
       });
+
       const data = await response.json();
+      if (response.status > 400) throw data;
       return data;
     }
   } catch (err) {
     console.log(err);
+    throw err;
   }
 }

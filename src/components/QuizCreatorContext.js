@@ -43,7 +43,10 @@ function QuizCreatorContextProvider({ children }) {
         toast.success("Quiz added successfuly", { autoClose: 3000 });
         setQuizCreation(false);
       })
-      .catch((err) => console.error(`Huknelo ${err}`));
+      .catch((err) => {
+        toast.error(`Error ${err.message}`, { autoClose: 5000 });
+        console.error(`Huknelo ${err}`);
+      });
 
     setQuestions([]);
     setCurrentQuestion([]);
