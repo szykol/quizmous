@@ -50,9 +50,11 @@ function Quizmous() {
         </Route>
       </Switch>
       <footer className="footer">
-        <span className="text-muted">
-          <ApiVersion />
-        </span>
+        <div style={{ marginTop: "20px" }}>
+          <span className="text-muted">
+            <ApiVersion />
+          </span>
+        </div>
       </footer>
     </div>
   );
