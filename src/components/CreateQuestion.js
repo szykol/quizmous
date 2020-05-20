@@ -15,7 +15,7 @@ function CreateQuestion({ questionObj }) {
   const readonly = questionObj != null;
 
   const [question, setQuestion] = useState(
-    readonly ? questionObj.question : "Your question"
+    readonly ? questionObj.question : ""
   );
   const [type, setType] = useState(readonly ? questionObj.type : "RADIO");
   const [answers, setAnswers] = useState(
@@ -75,23 +75,25 @@ function CreateQuestion({ questionObj }) {
 
                   setAnswers(newAnswers);
                 }}
-                readonly={readonly}
-                disabled={readonly}
+                readonly={type === "YES_NO" || readonly}
+                disabled={type === "YES_NO" || readonly}
               />
             </div>
-            <div style={{ alignSelf: "center" }}>
-              <Button
-                display="inline"
-                onClick={(e) => {
-                  const newAnswers = answers.filter(
-                    (item) => item !== answers[idx]
-                  );
-                  setAnswers(newAnswers);
-                }}
-              >
-                -
-              </Button>
-            </div>
+            {type !== "YES_NO" && (
+              <div style={{ alignSelf: "center" }}>
+                <Button
+                  display="inline"
+                  onClick={(e) => {
+                    const newAnswers = answers.filter(
+                      (item) => item !== answers[idx]
+                    );
+                    setAnswers(newAnswers);
+                  }}
+                >
+                  -
+                </Button>
+              </div>
+            )}
           </div>
         </>
       ))}
@@ -113,23 +115,28 @@ function CreateQuestion({ questionObj }) {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={(e) => {
-              const newAnswers = answers.map((answer) => {
-                return {
-                  answer,
-                };
-              });
-              pushNewQuestion({
-                question,
-                type: type,
-                answers: newAnswers,
-                required: true,
-              });
+            onClick={
+              question.trim() !== ""
+                ? (e) => {
+                    const newAnswers = answers.map((answer) => {
+                      return {
+                        answer,
+                      };
+                    });
+                    pushNewQuestion({
+                      question,
+                      type: type,
+                      answers: newAnswers,
+                      required: true,
+                    });
 
-              setType("RADIO");
-              setQuestion("Your question");
-              setAnswers(["Perfect!", "Outstanding!", "Good"]);
-            }}
+                    setType("RADIO");
+                    setQuestion("");
+                    setAnswers(["Perfect!", "Outstanding!", "Good"]);
+                  }
+                : null
+            }
+            disabled={question.trim() === ""}
           >
             Add Question
           </Button>
