@@ -17,8 +17,44 @@ import CardContent from "@material-ui/core/CardContent";
 
 import { red } from "@material-ui/core/colors";
 
-export default function Answer({ question, answers }) {
+export default function Answer({
+  validate,
+  question,
+  backendAnswers,
+  tokenAnswers,
+}) {
   const { updateQuizAnswer } = useContext(QuizContext);
+
+  function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+    // Please note that calling sort on an array will modify that array.
+    // you might want to clone your array first.
+
+    for (var i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+
+  function isCorrect() {
+    const bSorted = [...backendAnswers];
+    bSorted.sort();
+
+    const tSorted = [...tokenAnswers];
+    tSorted.sort();
+
+    const equal = arraysEqual(bSorted, tSorted);
+    if (!equal) {
+      validate();
+    }
+
+    return equal;
+  }
 
   return (
     <Grid
@@ -30,7 +66,12 @@ export default function Answer({ question, answers }) {
       item
       xs={12}
     >
-      <AnswerCard question={question} answers={answers} />
+      <AnswerCard
+        question={question}
+        backendAnswers={backendAnswers}
+        tokenAnswers={tokenAnswers}
+        correct={isCorrect()}
+      />
     </Grid>
   );
 }
@@ -38,6 +79,14 @@ export default function Answer({ question, answers }) {
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 500,
+  },
+  error: {
+    minWidth: 500,
+    color: "red",
+  },
+  correct: {
+    minWidth: 500,
+    color: "green",
   },
   media: {
     height: 0,
@@ -61,20 +110,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AnswerCard({ question, answers }) {
+function AnswerCard({ correct, question, backendAnswers, tokenAnswers }) {
   const classes = useStyles();
 
-  console.log(answers);
+  // console.log(answers);
   return (
-    <Card className={classes.root}>
+    <Card
+      className={correct ? classes.correct : classes.error}
+      style={{ borderColor: "red" }}
+    >
       <CardHeader
         classes={{
           title: classes.title,
         }}
-        title={question}
+        title={`${question} ${correct ? "✓" : "╳"}`}
       />
       <CardContent>
-        {answers.map((el) => (
+        <h4>Answers from API</h4>
+        {backendAnswers.map((el) => (
+          <div>{el}</div>
+        ))}
+        <h4>Answers saved in token</h4>
+        {tokenAnswers.map((el) => (
           <div>{el}</div>
         ))}
       </CardContent>
