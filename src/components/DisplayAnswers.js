@@ -8,7 +8,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Answer from "./Answer";
+import DiffAnswer from "./DiffAnswer";
 import { QuizContext } from "./QuizContext";
 import Typography from "@material-ui/core/Typography";
 import apiRequest from "../utils/request";
@@ -81,7 +81,7 @@ export default function DisplayAnswers() {
   function generate() {
     return Object.keys(tokenUserAnswers).map((elem, i) => {
       return (
-        <Answer
+        <DiffAnswer
           key={i}
           question={data.answers.questions[elem].question}
           answers={getAnswerListFromTokenElement(elem)}
@@ -129,7 +129,7 @@ export default function DisplayAnswers() {
           <Typography>{info}</Typography>
         </Grid>
         {validateData.map((elem, i) => (
-          <Answer
+          <DiffAnswer
             key={i}
             question={elem.question}
             backendAnswers={elem.backendAnswer}
